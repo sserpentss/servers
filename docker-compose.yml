@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  server:
+    container_name: php-apache
+    build: ./php/src
+    restart: always
+    volumes:
+      - ./php/src:/var/www/html/
+    ports:
+      - 8000:80
+  db:
+    container_name: db
+    image: mariadb
+    restart: always
+    environment:
+        MARIADB_ROOT_PASSWORD: example
+    volumes:
+        - ./db:/docker-entrypoint-initdb.d:ro
+    ports:
+        - "3308:3306"
